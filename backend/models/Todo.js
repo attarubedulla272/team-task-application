@@ -14,6 +14,17 @@ const todoSchema = new mongoose.Schema(
       trim: true,
       maxlength: 100,
     },
+    notes: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 5000,
+    },
+    folderId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Folder',
+      default: null,
+    },
     fromDate: {
       type: String,
       required: true,
@@ -28,6 +39,28 @@ const todoSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    attachments: [{
+      fileId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+      },
+      filename: {
+        type: String,
+        required: true,
+      },
+      contentType: {
+        type: String,
+        required: true,
+      },
+      size: {
+        type: Number,
+        required: true,
+      },
+      uploadedAt: {
+        type: Date,
+        default: Date.now,
+      },
+    }],
   },
   { timestamps: true }
 );

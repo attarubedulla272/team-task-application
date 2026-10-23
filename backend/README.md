@@ -1,6 +1,6 @@
 # Todo API
 
-Express API with MongoDB persistence using Mongoose.
+Express API with MongoDB persistence using Mongoose. Previously uploaded task attachments remain stored in MongoDB GridFS and can still be downloaded or deleted; new uploads are disabled.
 
 ## Setup
 
@@ -14,9 +14,15 @@ Keep that terminal open while using the app. Vite forwards `/api` requests to th
 ## Endpoints
 
 - `GET /api/health` — backend and database status
-- `GET /api/todos` — list todos
-- `POST /api/todos` — create a todo using `{ "task": "...", "person": "...", "fromDate": "2026-10-24", "toDate": "2026-10-26" }`
+- `GET /api/todos` — list todos with folder and attachment metadata
+- `POST /api/todos` — create a todo with `task`, `person`, required `notes`, date range, and optional `folderId`
+- `PUT /api/todos/:id` — update task details
 - `PATCH /api/todos/:id` — update completion using `{ "done": true }`
-- `DELETE /api/todos/:id` — delete a todo
+- `DELETE /api/todos/:id` — delete a task and its attached files
+- `GET /api/todos/:id/files/:fileId` — download a task attachment
+- `DELETE /api/todos/:id/files/:fileId` — delete a task attachment
+- `GET /api/folders` — list folders
+- `POST /api/folders` — create a folder using `{ "name": "Projects" }`
+- `DELETE /api/folders/:id` — delete an empty folder; returns `409` if tasks are still assigned
 
-New todos require a person name and valid `fromDate` and `toDate` values in `YYYY-MM-DD` format. The To date cannot be earlier than the From date. The frontend calculates the range duration inclusively in calendar days.
+New todos require a person name, non-empty notes, and valid `fromDate` and `toDate` values in `YYYY-MM-DD` format. The To date cannot be earlier than the From date. Folder assignment is optional. The frontend calculates date duration inclusively in calendar days.

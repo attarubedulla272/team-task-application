@@ -1,4 +1,4 @@
-# Todo application
+# Arayracs Task Planner
 
 The frontend is a React/Vite app. The Express and MongoDB API is maintained separately in [`backend/`](./backend/README.md).
 
@@ -26,7 +26,7 @@ The frontend is a React/Vite app. The Express and MongoDB API is maintained sepa
    npm run dev
    ```
 
-This command waits until MongoDB and the API are ready before starting Vite, preventing startup-time proxy errors. Keep the terminal open while using the app. Vite proxies API requests to `http://localhost:5000`. Each new task requires a responsible person's name and a From/To date range; its duration is calculated inclusively in calendar days and saved with the task.
+This command waits until MongoDB and the API are ready before starting Vite, preventing startup-time proxy errors. Keep the terminal open while using the app. Vite proxies API requests to `http://localhost:5000`. Tasks require an assignee, notes, and a From/To date range; duration is calculated inclusively in calendar days. Create folders separately and assign tasks to them if desired. New file uploads are disabled. Any files attached previously remain in MongoDB and can still be downloaded or deleted from their task.
 
 ## Deploy to Render
 
