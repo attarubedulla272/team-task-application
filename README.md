@@ -27,3 +27,15 @@ The frontend is a React/Vite app. The Express and MongoDB API is maintained sepa
    ```
 
 This command waits until MongoDB and the API are ready before starting Vite, preventing startup-time proxy errors. Keep the terminal open while using the app. Vite proxies API requests to `http://localhost:5000`. Each new task requires a responsible person's name and a From/To date range; its duration is calculated inclusively in calendar days and saved with the task.
+
+## Deploy to Render
+
+This repository includes [`render.yaml`](./render.yaml) for a single Render Web Service. Express serves the production-built React app and the `/api` endpoints from the same service.
+
+1. Push this repository to GitHub.
+2. In Render, choose **New > Blueprint**, connect the `team-task-application` GitHub repository, and deploy the detected Blueprint.
+3. When prompted, set `MONGODB_URI` to your MongoDB Atlas connection string. Keep this value in Render's environment settings; do not commit it to GitHub.
+4. Configure MongoDB Atlas Network Access so the Render service can reach the cluster.
+5. After deployment, open the Render service URL. Check `/api/health` if the app reports that it cannot reach the database.
+
+Render will run `npm ci && npm --prefix backend ci && npm run build`, then start the Express server. The web service binds to Render's `PORT` environment variable.
